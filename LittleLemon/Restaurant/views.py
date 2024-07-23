@@ -1,7 +1,8 @@
 from django.shortcuts import render
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework import generics
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 
 from django.http import HttpResponse
 
@@ -26,6 +27,11 @@ class SingleMenuItemView(generics.RetrieveUpdateAPIView, generics.DestroyAPIView
 
 
 class BookingViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Booking.objects.all()
     serializer_class = BookingSerializer
-    #permission_classes = [permissions.IsAuthenticated]
+
+@api_view()
+@permission_classes([IsAuthenticated])
+def securedview(request):
+    return Response({"message": "needs authentication"})
