@@ -1,4 +1,4 @@
-from django.tests import TestCase
+from django.test import TestCase
 from Restaurant import models
 
 class MenuTest(TestCase):
